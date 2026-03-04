@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Nâng cấp lên v4 cho checkout
 
       - name: Set up JDK 8
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4 # Nâng cấp lên v4 cho setup-java
         with:
-          java-version: '8'  # Dự án cũ từ 2017 dùng Java 8
+          java-version: '8'
           distribution: 'temurin'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v3 # Phiên bản mới nhất của action này vẫn là v3, không sao
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -28,7 +28,9 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # ĐÃ SỬA: Nâng cấp lên v4
         with:
           name: DeskClock-Chen-APK
           path: app/build/outputs/apk/debug/app-debug.apk
+          compression-level: 6 # Tùy chọn mới của v4: giảm kích thước file
+          if-no-files-found: error # Tùy chọn mới: báo lỗi nếu không tìm thấy APK
